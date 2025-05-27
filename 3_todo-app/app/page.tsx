@@ -7,7 +7,7 @@ import TodoList from "@/components/todo-list"
 import Footer from "@/components/footer"
 
 // Define the TodoContext
-export const TodoContext = createContext(null)
+export const TodoContext = createContext<any>(null)
 
 // Define the initial state
 const initialState = {
@@ -16,7 +16,7 @@ const initialState = {
 }
 
 // Define the reducer function
-function todoReducer(state, action) {
+function todoReducer(state: any, action: any) {
   switch (action.type) {
     case "INIT":
       return {
@@ -38,12 +38,12 @@ function todoReducer(state, action) {
     case "TOGGLE":
       return {
         ...state,
-        todos: state.todos.map((todo) => (todo.id === action.payload ? { ...todo, completed: !todo.completed } : todo)),
+        todos: state.todos.map((todo: any) => (todo.id === action.payload ? { ...todo, completed: !todo.completed } : todo)),
       }
     case "REMOVE":
       return {
         ...state,
-        todos: state.todos.filter((todo) => todo.id !== action.payload),
+        todos: state.todos.filter((todo: any) => todo.id !== action.payload),
       }
     case "SET_FILTER":
       return {
@@ -56,7 +56,7 @@ function todoReducer(state, action) {
 }
 
 // Custom hook for localStorage persistence
-function usePersistentState(key, initialValue) {
+function usePersistentState(key: string, initialValue: any) {
   const [state, dispatch] = useReducer(todoReducer, initialValue)
 
   // Load from localStorage on initial render
@@ -87,7 +87,7 @@ export default function Home() {
   const [state, dispatch] = usePersistentState("todos", initialState)
 
   // Filter todos based on current filter
-  const filteredTodos = state.todos.filter((todo) => {
+  const filteredTodos = state.todos.filter((todo: any) => {
     if (state.filter === "active") return !todo.completed
     if (state.filter === "completed") return todo.completed
     return true // "all" filter
