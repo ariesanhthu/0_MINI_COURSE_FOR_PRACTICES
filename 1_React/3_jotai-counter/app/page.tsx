@@ -4,8 +4,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Separator } from "@/components/ui/separator"
 import ComponentA from "@/components/component-a"
 import ComponentB from "@/components/component-b"
+import { counterAtom } from "@/atoms/counter"
+import { useAtom } from "jotai"
 
 export default function Home() {
+  // This is just to ensure the atom is initialized
+  const [counter] = useAtom(counterAtom);
   return (
     <main className="min-h-screen flex flex-row items-center justify-center p-4 bg-gray-50 w-full">
       <div className="w-full">
@@ -34,27 +38,37 @@ export default function Home() {
               <ComponentB />
             </CardContent>
           </Card>
-       <Card className="shadow-md">
+       <Card className="shadow-md bg-gray-950 text-white">
           <CardHeader>
             <CardTitle>How It Works</CardTitle>
           </CardHeader>
           <CardContent>
-            <ol className="list-decimal pl-5 space-y-2">
-  <li>
-    We create a shared atom in <code className="bg-yellow-200 font-bold">atoms/counter.ts</code>
-  </li>
-  <li>
-    <span className="font-bold">ComponentA</span> imports the atom and uses <code className="bg-yellow-200 font-bold">useAtom</code> to get and update the state
-  </li>
-  <li>
-    <span className="font-bold">ComponentB</span> also imports the same atom and uses <code className="bg-yellow-200 font-bold">useAtomValue</code> to read the state
-  </li>
-  <li>
-    When the button in <span className="font-bold">ComponentA</span> is clicked, both components reflect the updated state
-  </li>
-</ol>
-
-          </CardContent>
+  <ol className="list-decimal pl-5 space-y-2">
+    {counter%5 >= 1 && (
+      <li>
+        We create a shared atom in <code>atoms/counter.ts</code>
+      </li>
+    )}
+    
+    {counter%5 >= 2 && (
+      <li>
+        <span className="font-bold">ComponentA</span> imports the atom and uses <code>useAtom</code> to get and update the state
+      </li>
+    )}
+    
+    {counter%5 >= 3 && (
+      <li>
+        <span className="font-bold">ComponentB</span> also imports the same atom and uses <code>useAtomValue</code> to read the state
+      </li>
+    )}
+    
+    {counter%5 >= 4 && (
+      <li>
+        When the button in <span className="font-bold">ComponentA</span> is clicked, both components reflect the updated state
+      </li>
+    )}
+  </ol>
+</CardContent>
         </Card>
        </div>
       </div>
